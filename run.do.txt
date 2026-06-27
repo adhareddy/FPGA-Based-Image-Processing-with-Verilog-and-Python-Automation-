@@ -1,0 +1,43 @@
+# --------------------------------------------------
+# ModelSim automation script for image filter project
+# --------------------------------------------------
+
+# Stop currently running simulation if any
+quit -sim
+
+# Clear transcript messages if supported
+.main clear
+
+# Create work library if it does not exist
+if {[file exists work]} {
+    vdel -lib work -all
+}
+vlib work
+
+# Compile all Verilog files
+vlog parameter.v
+vlog image_read.v
+vlog image_write.v
+vlog tb_simulation.v
+
+# Start simulation using testbench
+vsim work.tb_simulation
+
+# Add useful signals to waveform window
+add wave -radix unsigned sim:/tb_simulation/HCLK
+add wave -radix unsigned sim:/tb_simulation/HRESETn
+add wave -radix unsigned sim:/tb_simulation/hsync
+add wave -radix unsigned sim:/tb_simulation/vsync
+add wave -radix unsigned sim:/tb_simulation/data_R0
+add wave -radix unsigned sim:/tb_simulation/data_G0
+add wave -radix unsigned sim:/tb_simulation/data_B0
+add wave -radix unsigned sim:/tb_simulation/data_R1
+add wave -radix unsigned sim:/tb_simulation/data_G1
+add wave -radix unsigned sim:/tb_simulation/data_B1
+add wave -radix unsigned sim:/tb_simulation/write_done
+
+# Run complete simulation
+run -all
+
+# Print message
+echo "Simulation completed. Check output.bmp in project folder."
