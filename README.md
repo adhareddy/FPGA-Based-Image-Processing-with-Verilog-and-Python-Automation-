@@ -1,5 +1,4 @@
 # FPGA-Based-Image-Processing-with-Verilog-and-Python-Automation-
-# FPGA-Based Image Processing with Verilog and Python Automation
 
 ##  Overview
 
